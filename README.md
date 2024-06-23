@@ -1,5 +1,4 @@
-
-    <h1>Travel Booking Name</h1>
+<h1>Travel Booking Name</h1>
     <p>Travel Booking Name is a Django-based web application for booking travel packages, managing bookings, and collecting customer feedback.</p>
 
     <h1>Features:</h1>
