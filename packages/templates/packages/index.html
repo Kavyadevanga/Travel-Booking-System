@@ -1,0 +1,37 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Home</h1>
+       
+    </div>
+
+    <div class="row">
+
+
+        <div class="col-lg-12 mb-4">
+
+            <!-- Illustrations -->
+            <div class="card shadow mb-4">
+                
+                <div class="card-body">
+                    <div class="text-center">
+                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" src="{% static 'images/travel_image.jpeg' %}" alt="..." style="width: 1600px; height: 565px;">
+                    </div>
+                    
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                    <a  rel="nofollow" href="{% url 'package-list' %}">
+                        View Package →</a>
+                </div>
+            </div>
+
+           
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+

@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Booking Info{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Package List</h1>
+    </div>
+    <!-- Page Content Here -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Package</th>
+                <th>Customer Name</th>
+                <th>Booking Date</th>
+                <th>Start Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td><a href="{% url 'package_overview' booking.package.pk %}">{{ booking.package.name }}</a></td>
+                <td>{{ booking.user }}</td>
+                <td>{{ booking.booking_date }}</td>
+                <td>{{ booking.start_date }}</td>
+                <td>{{ booking.status }}</td>
+                <td>
+                    <a href="{% url 'booking_delete' booking.pk %}" class="btn btn-sm btn-danger">Cancel</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

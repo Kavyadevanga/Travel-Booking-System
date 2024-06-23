@@ -1,0 +1,50 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Package List{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Package List</h1>
+       
+    </div>
+    <!-- Page Content Here -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Cost</th>
+                <th>Overview</th>
+                <th>Number of Days</th>
+                <th>Images</th>
+                {% if request.user.is_superuser %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for package in packages %}
+            <tr>
+                <td><a href="{% url 'package_overview' package.pk %}">{{ package.name }}</a></td>
+                <td>{{ package.cost }}</td>
+                <td>{{ package.overview|truncatewords:5 }}</td>
+                <td>{{ package.number_of_days }}</td>
+                <td>
+                    {% for image in package.images.all %}
+                    <img src="{{ image.image.url }}" alt="Image for {{ package.name }}" width="30" height="30">
+                    {% endfor %}
+                </td>
+                {% if request.user.is_superuser %}
+                <td>
+                    <a href="{% url 'package_edit' package.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'package_delete' package.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

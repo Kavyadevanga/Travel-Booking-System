@@ -1,0 +1,71 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <h2>Create Package</h2>
+    <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="row g-3">
+            <div class="col-sm-6">
+                <label for="id_name" class="form-label">Name:</label>
+                {{ package_form.name }}
+                {% if package_form.name.errors %}
+                    <ul class="errors">
+                        {% for error in package_form.name.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="col-sm-6">
+                <label for="id_cost" class="form-label">Cost:</label>
+                {{ package_form.cost }}
+                {% if package_form.cost.errors %}
+                    <ul class="errors">
+                        {% for error in package_form.cost.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="col-12">
+                <label for="id_overview" class="form-label">Overview:</label>
+                {{ package_form.overview }}
+                {% if package_form.overview.errors %}
+                    <ul class="errors">
+                        {% for error in package_form.overview.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="col-sm-12">
+                <label for="id_number_of_days" class="form-label">Number of Days:</label>
+                {{ package_form.number_of_days }}
+                {% if package_form.number_of_days.errors %}
+                    <ul class="errors">
+                        {% for error in package_form.number_of_days.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="col-sm-12 mb-4">
+                <label for="id_images">Images:</label>
+                <input type="file" name="images" id="id_images" class="form-control" multiple>
+                {% if package_form.images.errors %}
+                    <ul class="errors">
+                        {% for error in package_form.images.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="col-sm-6">
+                <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

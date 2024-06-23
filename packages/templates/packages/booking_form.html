@@ -1,0 +1,63 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<div class="container-fluid">
+    <h2>Book a Package</h2>
+    <form method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="row g-3">
+            <div class="col-sm-6">
+                <label for="id_user" class="form-label">User:</label>
+                {{ booking_form.user }}  <!-- Display the user field -->
+                {% if booking_form.user.errors %}
+                    <div class="invalid-feedback">
+                        {{ booking_form.user.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-sm-6">
+                <label for="package" class="form-label">Package:</label>
+                {{ booking_form.package }}
+                {% if booking_form.package.errors %}
+                    <div class="invalid-feedback">
+                        {{ booking_form.package.errors|striptags }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-sm-6">
+                <label for="booking_date" class="form-label">Booking Date:</label>
+                {{ booking_form.booking_date }}
+                {% if booking_form.booking_date.errors %}
+                    <div class="invalid-feedback">
+                        {{ booking_form.booking_date.errors|striptags }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-sm-6">
+                <label for="status" class="form-label">Status:</label>
+                {{ booking_form.status }}
+                {% if booking_form.status.errors %}
+                    <div class="invalid-feedback">
+                        {{ booking_form.status.errors|striptags }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-sm-6">
+                <label for="start_date" class="form-label">Start Date:</label>
+                {{ booking_form.start_date }}
+                {% if booking_form.start_date.errors %}
+                    <div class="invalid-feedback">
+                        {{ booking_form.start_date.errors|striptags }}
+                    </div>
+                {% endif %}
+            </div>
+          
+        </div>
+        <div class="row g-3 mt-3">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

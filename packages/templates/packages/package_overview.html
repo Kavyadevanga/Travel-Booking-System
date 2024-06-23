@@ -1,0 +1,206 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-4 text-gray-800">Package Details</h1>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Circle Buttons -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+
+                    <h2 class="m-0 font-weight-bold text-primary">{{ package.name }}</h2>
+                    <!-- Dropdown Menu for Edit/Delete -->
+                    <div class="dropdown">
+                        {% if request.user.is_superuser %}
+
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{% url 'package_edit' package.pk %}">Edit</a>
+                            <a class="dropdown-item" href="{% url 'package_delete' package.pk %}">Delete</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class='head'><strong>Overview</strong></b></p>
+
+                    <p>{{ package.overview }}</p>
+                    <p class="mb-3 font-weight-bold text-primary head">{{ package.cost }}/ per head</p>
+
+                    <!-- Image Carousel -->
+                    <p class='head'><strong>Image Gallery</strong></p>
+
+                    <div class="carousel-container">
+                        <div class="carousel" id="carousel">
+                            {% for image in package.images.all %}
+                                <div class="carousel-slide">
+                                    <img src="{{ image.image.url }}" class="d-block img-thumbnail carousel-image" alt="Image of {{ package.name }}" data-toggle="modal" data-target="#imageModal" data-image="{{ image.image.url }}">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control prev" id="prevBtn">&#9664;</button>
+                        <button class="carousel-control next" id="nextBtn">&#9654;</button>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        {% if request.user.is_authenticated %}
+                            <a href="{% url 'booking' %}" class="btn btn-primary btn-user btn-block mt-4">
+                                Book Now
+                            </a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="btn btn-primary btn-user btn-block mt-4">
+                                Book To Login
+                            </a>
+                        {% endif %}
+                    </div>
+                     <!-- Default Card Example -->
+
+                     <!-- Reviews Section -->
+                     {% if feedbacks %}
+                     <p class='head'><strong>Reviews</strong></p>
+                     <div class="row">
+                         {% for feedback in feedbacks %}
+                         <div class="col-md-4 col-12 mb-4">
+                             <div class="card">
+                                 <div class="card-header">
+                                     <h6 class="m-0 font-weight-bold text-primary">Username: {{ feedback.user.username }}</h6>
+                                 </div>
+                                 <div class="card-body">
+                                     <p>{{ feedback.feedback_text|truncatewords:'20' }}</p>
+                                     <!-- Add other fields from Feedback model as needed -->
+                                 </div>
+                             </div>
+                         </div>
+                         {% endfor %}
+                     </div>
+                     {% endif %}
+
+                    
+                </div>
+            </div>
+            
+        </div>
+    
+
+    </div>
+  
+    
+</div>
+
+
+
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="modalImage" class="img-fluid" alt="Package Image">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<style>
+
+.head{
+    color: black;
+    font-size: 20px;
+}
+
+.carousel-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    flex: 0 0 auto;
+}
+
+.carousel-image {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    margin: 0 5px;
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 2em;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('carousel');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let index = 0;
+
+    const moveToSlide = (slideIndex) => {
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+        index = (slideIndex + totalSlides) % totalSlides;
+        carousel.style.transform = `translateX(${-index * 210}px)`; // 200px width + 10px margin
+    };
+
+    const moveToNextSlide = () => {
+        moveToSlide(index + 1);
+    };
+
+    const moveToPrevSlide = () => {
+        moveToSlide(index - 1);
+    };
+
+    nextBtn.addEventListener('click', moveToNextSlide);
+    prevBtn.addEventListener('click', moveToPrevSlide);
+
+    $('#imageModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var imageUrl = button.data('image'); // Extract info from data-* attributes
+        var modal = $(this);
+        modal.find('.modal-body img').attr('src', imageUrl);
+    });
+});
+</script>
+{% endblock %}
