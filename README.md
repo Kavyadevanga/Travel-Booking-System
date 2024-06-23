@@ -35,6 +35,22 @@
         <li>Install MySQL and ensure it's running.</li>
         <li>Create a new database for your project (<code>travel_booking_name_db</code> for example).</li>
     </ul>
+Configure database settings:
+
+Open settings.py in your Django project and update the database settings with your MySQL credentials and database name:
+
+python
+Copy code
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'travel_booking_name_db',
+        'USER': 'your_mysql_username',
+        'PASSWORD': 'your_mysql_password',
+        'HOST': 'localhost',  # Or your MySQL host
+        'PORT': '3306',       # Or your MySQL port
+    }
+}
 
 <h1>Configure database settings:</h1>
     <pre><code>python manage.py makemigrations</code></pre>
