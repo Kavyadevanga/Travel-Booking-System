@@ -19,7 +19,7 @@ def index(request):
 
 def register_page(request):
     if request.user.is_authenticated:
-        return redirect('Dashboard') 
+        return redirect('dashboard') 
     else:
         form = CreateUserForm()
         if request.method == 'POST':

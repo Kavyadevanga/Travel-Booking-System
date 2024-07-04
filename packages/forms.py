@@ -99,6 +99,12 @@ class CreateUserForm(UserCreationForm):
         widget=forms.PasswordInput(attrs={'class': 'form-control form-control-user', 'placeholder': 'Confirm Your password'})
     )
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email address is already in use.")
+        return email
+
     def clean(self):
         cleaned_data = super().clean()
         password1 = cleaned_data.get("password1")

@@ -3,7 +3,6 @@
 {% block title %}Register{% endblock %}
 
 <div class="container">
-
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
@@ -14,36 +13,59 @@
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div>
-                        <form method='POST' class="user" >
+                        <form method="POST" class="user">
                             {% csrf_token %}
+                            <!-- Display non-field errors -->
+                            {% if form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ form.non_field_errors }}
+                            </div>
+                            {% endif %}
                             <div class="form-group row">
                                 <div class="col-sm-12 mb-3 mb-sm-0">
                                     {{ form.username }}
-
+                                    <!-- Display field errors for username -->
+                                    {% if form.username.errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.username.errors }}
+                                    </div>
+                                    {% endif %}
                                 </div>
-                               
                             </div>
                             <div class="form-group">
                                 {{ form.email }}
-
+                                <!-- Display field errors for email -->
+                                {% if form.email.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ form.email.errors }}
+                                </div>
+                                {% endif %}
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     {{ form.password1 }}
-
+                                    <!-- Display field errors for password1 -->
+                                    {% if form.password1.errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.password1.errors }}
+                                    </div>
+                                    {% endif %}
                                 </div>
                                 <div class="col-sm-6">
                                     {{ form.password2 }}
-
+                                    <!-- Display field errors for password2 -->
+                                    {% if form.password2.errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form.password2.errors }}
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                             <button class="btn btn-primary btn-user btn-block">
                                 Register Account
                             </button>
-                           
                         </form>
                         <hr>
-                       
                         <div class="text-center">
                             <a class="small" href="{% url 'login' %}">Already have an account? Login!</a>
                         </div>
@@ -52,14 +74,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 {% endblock %}
-
-
-
-
-
-
-
